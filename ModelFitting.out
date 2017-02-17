@@ -1,0 +1,86 @@
+Loading required package: numDeriv
+Loading required package: RColorBrewer
+Error in paste(c("M3Drop\nError:", "SCDE\nError:", "ZIFA\nError:"), round(c(MM$SAr,  : 
+  object 'MM' not found
+Calls: legend -> paste
+Execution halted
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@bc-26-1-11>
+Subject: Job 2330052: </software/R-3.3.0/bin/Rscript Figures_ModelFitting.R Figures_ModelFitting.Rout> in cluster <farm3> Exited
+
+Job </software/R-3.3.0/bin/Rscript Figures_ModelFitting.R Figures_ModelFitting.Rout> was submitted from host <farm3-head4> by user <ta6> in cluster <farm3>.
+Job was executed on host(s) <bc-26-1-11>, in queue <normal>, as user <ta6> in cluster <farm3>.
+</nfs/users/nfs_t/ta6> was used as the home directory.
+</nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/NatCommPaper> was used as the working directory.
+Started at Mon Jan 30 16:48:52 2017
+Results reported on Mon Jan 30 16:49:27 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/software/R-3.3.0/bin/Rscript Figures_ModelFitting.R Figures_ModelFitting.Rout
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   34.23 sec.
+    Max Memory :                                 519 MB
+    Average Memory :                             207.00 MB
+    Total Requested Memory :                     15000.00 MB
+    Delta Memory :                               14481.00 MB
+    Max Swap :                                   716 MB
+    Max Processes :                              3
+    Max Threads :                                4
+
+The output (if any) is above this job summary.
+
+Loading required package: numDeriv
+Loading required package: RColorBrewer
+Loading required package: matrixStats
+matrixStats v0.50.2 (2016-04-24) successfully loaded. See ?matrixStats for help.
+null device 
+          1 
+null device 
+          1 
+Error in hidden_calc_vals(counts) : 
+  Expression matrix is not integers! Please provide a matrix (not data.frame) raw UMI counts!
+Calls: NB_plot -> NBumiFitModel -> hidden_calc_vals
+Execution halted
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@bc-27-1-16>
+Subject: Job 2330232: </software/R-3.3.0/bin/Rscript Figures_ModelFitting.R Figures_ModelFitting.Rout> in cluster <farm3> Exited
+
+Job </software/R-3.3.0/bin/Rscript Figures_ModelFitting.R Figures_ModelFitting.Rout> was submitted from host <farm3-head4> by user <ta6> in cluster <farm3>.
+Job was executed on host(s) <bc-27-1-16>, in queue <normal>, as user <ta6> in cluster <farm3>.
+</nfs/users/nfs_t/ta6> was used as the home directory.
+</nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/NatCommPaper> was used as the working directory.
+Started at Mon Jan 30 17:11:47 2017
+Results reported on Mon Jan 30 17:19:03 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/software/R-3.3.0/bin/Rscript Figures_ModelFitting.R Figures_ModelFitting.Rout
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   421.17 sec.
+    Max Memory :                                 7469 MB
+    Average Memory :                             3527.04 MB
+    Total Requested Memory :                     15000.00 MB
+    Delta Memory :                               7531.00 MB
+    Max Swap :                                   7787 MB
+    Max Processes :                              3
+    Max Threads :                                4
+
+The output (if any) is above this job summary.
+

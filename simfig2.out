@@ -1,0 +1,370 @@
+Loading required package: M3Drop
+Loading required package: numDeriv
+Loading required package: matrixStats
+matrixStats v0.50.2 (2016-04-24) successfully loaded. See ?matrixStats for help.
+[1] 1
+[1] 25000   500
+Error: could not find function "NBumiFitModel"
+Execution halted
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@bc-32-1-03>
+Subject: Job 2688153: </software/R-3.3.0/bin/Rscript Figure_Simulations.R> in cluster <farm3> Exited
+
+Job </software/R-3.3.0/bin/Rscript Figure_Simulations.R> was submitted from host <farm3-head1> by user <ta6> in cluster <farm3>.
+Job was executed on host(s) <bc-32-1-03>, in queue <normal>, as user <ta6> in cluster <farm3>.
+</nfs/users/nfs_t/ta6> was used as the home directory.
+</nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/NatCommPaper> was used as the working directory.
+Started at Thu Feb  9 23:52:13 2017
+Results reported on Thu Feb  9 23:52:19 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/software/R-3.3.0/bin/Rscript Figure_Simulations.R
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   4.75 sec.
+    Max Memory :                                 255 MB
+    Average Memory :                             255.00 MB
+    Total Requested Memory :                     25000.00 MB
+    Delta Memory :                               24745.00 MB
+    Max Swap :                                   476 MB
+    Max Processes :                              3
+    Max Threads :                                4
+
+The output (if any) is above this job summary.
+
+Loading required package: M3Drop
+Loading required package: numDeriv
+Loading required package: matrixStats
+matrixStats v0.51.0 (2016-10-08) successfully loaded. See ?matrixStats for help.
+[1] 1
+[1] 25000   500
+Loading required package: reldist
+reldist: Relative Distribution Methods
+Version 1.6-6 created on 2016-10-07.
+copyright (c) 2003, Mark S. Handcock, University of California-Los Angeles
+ For citation information, type citation("reldist").
+ Type help(package="reldist") to get started.
+
+
+Attaching package: ‘reldist’
+
+The following object is masked from ‘package:matrixStats’:
+
+    iqr
+
+Loading required package: monocle
+Loading required package: methods
+Loading required package: Matrix
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, cbind, colnames, do.call,
+    duplicated, eval, evalq, Filter, Find, get, grep, grepl, intersect,
+    is.unsorted, lapply, lengths, Map, mapply, match, mget, order,
+    paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind,
+    Reduce, rownames, sapply, setdiff, sort, table, tapply, union,
+    unique, unsplit
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: ggplot2
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+Loading required package: DDRTree
+Loading required package: irlba
+Loading required package: ROCR
+Loading required package: gplots
+
+Attaching package: ‘gplots’
+
+The following object is masked from ‘package:stats’:
+
+    lowess
+
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 2
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@bc-29-3-08>
+Subject: Job 2812591: </software/R-3.3.0/bin/Rscript Figure_Simulations.R> in cluster <farm3> Done
+
+Job </software/R-3.3.0/bin/Rscript Figure_Simulations.R> was submitted from host <farm3-head1> by user <ta6> in cluster <farm3>.
+Job was executed on host(s) <bc-29-3-08>, in queue <normal>, as user <ta6> in cluster <farm3>.
+</nfs/users/nfs_t/ta6> was used as the home directory.
+</nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/NatCommPaper> was used as the working directory.
+Started at Mon Feb 13 12:26:38 2017
+Results reported on Mon Feb 13 20:11:54 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/software/R-3.3.0/bin/Rscript Figure_Simulations.R
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   27909.72 sec.
+    Max Memory :                                 20622 MB
+    Average Memory :                             7748.99 MB
+    Total Requested Memory :                     25000.00 MB
+    Delta Memory :                               4378.00 MB
+    Max Swap :                                   20887 MB
+    Max Processes :                              3
+    Max Threads :                                4
+
+The output (if any) is above this job summary.
+
+Loading required package: M3Drop
+Loading required package: numDeriv
+Loading required package: matrixStats
+matrixStats v0.51.0 (2016-10-08) successfully loaded. See ?matrixStats for help.
+[1] 1
+[1] 25000   500
+Loading required package: reldist
+reldist: Relative Distribution Methods
+Version 1.6-6 created on 2016-10-07.
+copyright (c) 2003, Mark S. Handcock, University of California-Los Angeles
+ For citation information, type citation("reldist").
+ Type help(package="reldist") to get started.
+
+
+Attaching package: ‘reldist’
+
+The following object is masked from ‘package:matrixStats’:
+
+    iqr
+
+Loading required package: monocle
+Loading required package: methods
+Loading required package: Matrix
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, cbind, colnames, do.call,
+    duplicated, eval, evalq, Filter, Find, get, grep, grepl, intersect,
+    is.unsorted, lapply, lengths, Map, mapply, match, mget, order,
+    paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind,
+    Reduce, rownames, sapply, setdiff, sort, table, tapply, union,
+    unique, unsplit
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: ggplot2
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+Loading required package: DDRTree
+Loading required package: irlba
+Loading required package: ROCR
+Loading required package: gplots
+
+Attaching package: ‘gplots’
+
+The following object is masked from ‘package:stats’:
+
+    lowess
+
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 2
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+[1] 25000   500
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@bc-26-2-13>
+Subject: Job 2874123: </software/R-3.3.0/bin/Rscript Figure_Simulations.R> in cluster <farm3> Done
+
+Job </software/R-3.3.0/bin/Rscript Figure_Simulations.R> was submitted from host <farm3-head1> by user <ta6> in cluster <farm3>.
+Job was executed on host(s) <bc-26-2-13>, in queue <normal>, as user <ta6> in cluster <farm3>.
+</nfs/users/nfs_t/ta6> was used as the home directory.
+</nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/NatCommPaper> was used as the working directory.
+Started at Tue Feb 14 15:02:29 2017
+Results reported on Wed Feb 15 01:17:07 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/software/R-3.3.0/bin/Rscript Figure_Simulations.R
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   36807.27 sec.
+    Max Memory :                                 15220 MB
+    Average Memory :                             6558.84 MB
+    Total Requested Memory :                     25000.00 MB
+    Delta Memory :                               9780.00 MB
+    Max Swap :                                   15483 MB
+    Max Processes :                              3
+    Max Threads :                                4
+
+The output (if any) is above this job summary.
+
