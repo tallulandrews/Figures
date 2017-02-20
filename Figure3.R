@@ -340,7 +340,6 @@ out2 = make_PCA(rownames(my_Matrix))
 heat_data <- log(Combined_norm+1)/log(2);
 
 #png("Combined_Axna2_S100a10.png", width=5*3/1.25*0.8, height=5*0.8, units="in", res=300)
-par(mfrow=c(1,3))
 par(mar=c(4,4,2.5,1))
 # Known Axna2 & S100a10 heterotetramer involved in embryo implantation
 # Wang (2015) Annexin A2 Acts as an Adhesion Molecule on the Endometrial Epithelium during Implantation in Mice.
@@ -352,12 +351,12 @@ c16 = truth_blast=="16cell"
 bla = truth_blast=="blast"
 
 print("8cell")
-plot(Anxa2[c8], S100a10[c8], pch=pch_set[dataset_labels[c8]], xlab="Anxa2", ylab="S100a10", col="grey50", main="8cell", cex=1.5)
+plot(Anxa2[c8], S100a10[c8], pch=pch_set[Source[c8]], xlab="Anxa2", ylab="S100a10", col="grey50", main="8cell", cex=1.5)
 cout = cor.test(Anxa2[c8], S100a10[c8])
 legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
 
 print("16cell")
-plot(Anxa2[c16], S100a10[c16], pch=pch_set[dataset_labels[c16]], xlab="Anxa2", ylab="S100a10", col="grey50", main="16cell", cex=1.5)
+plot(Anxa2[c16], S100a10[c16], pch=pch_set[Source[c16]], xlab="Anxa2", ylab="S100a10", col="grey50", main="16cell", cex=1.5)
 cout = cor.test(Anxa2[c16], S100a10[c16])
 legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
 
@@ -365,7 +364,7 @@ print("blast")
 blast_cols = rep("grey50",times=length(truth_ICM_TE)); 
 blast_cols[truth_ICM_TE=="TE"] = TE_col; 
 blast_cols[truth_ICM_TE=="ICM"]= ICM_col;
-plot(Anxa2[bla], S100a10[bla], pch=pch_set[dataset_labels[bla]], xlab="Anxa2", ylab="S100a10", col=blast_cols[bla], main="blastocyst", cex=1.5)
+plot(Anxa2[bla], S100a10[bla], pch=pch_set[Source[bla]], xlab="Anxa2", ylab="S100a10", col=blast_cols[bla], main="blastocyst", cex=1.5)
 
 tidy1 = Anxa2[truth_ICM_TE=="TE" & Anxa2>4 & S100a10>4]
 tidy2 = S100a10[truth_ICM_TE=="TE" & Anxa2>4 & S100a10>4]
