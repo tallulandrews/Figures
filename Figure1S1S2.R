@@ -96,8 +96,8 @@ NB_plot <- function(counts, size_factor=(colSums(counts)/median(colSums(counts))
         norm <- NBumiConvertToInteger(t(t(counts)/size_factor));
         fit_adjust <- NBumiFitModel(counts);
         fit_basic <- NBumiFitBasicModel(norm);
-        check_adjust <- NBumiCheckFit(counts, fit_adjust, suppress.plot=TRUE)
-        check_basic <- NBumiCheckFit(norm, fit_basic, suppress.plot=TRUE)
+        check_adjust <- NBumiCheckFitFS(counts, fit_adjust, suppress.plot=TRUE)
+        check_basic <- NBumiCheckFitFS(norm, fit_basic, suppress.plot=TRUE)
         nc = fit_adjust$vals$nc
 #       plot( log(fit_adjust$vals$tjs/fit_adjust$vals$nc)/log(10), fit_adjust$vals$djs, col="white" )
 #       arrows(log(fit_adjust$vals$tjs/fit_adjust$vals$nc)/log(10), fit_adjust$vals$djs, 
@@ -223,8 +223,10 @@ legend("topleft", fill=c(Depth_col, Norm_col), c("Depth-Adjusted", "Normalized")
 dev.off()
 
 ###### Figure 1 ######
-png("Figure1.png", width=4.5*2, height=4.5, units="in", res=300)
+png("Figure1.png", width=6, height=6, units="in", res=300)
 layout(matrix(c(1,2,3,3), ncol=2, byrow=TRUE))
+par(cex=1.25)
+par(mar=c(4,4,3,0))
 # A
 Ola_stats_MM <- custom_plot(Ola, is_counts=TRUE, xlim=c(-1.5,6), textpos=-0.5)
 title("Zero-inflation models")
@@ -244,7 +246,7 @@ bar_data <- cbind( c(blish_stats_NB, blish_stats_MM[,2]),
 		   c(pollen_stats_NB, pollen_stats_MM[,2]),
 		   c(Z_stats_NB, Z_stats_MM[,2]))
 
-par(mar=c(4.5,4,1,1))
+par(mar=c(4.5,4,0,0))
 barplot(bar_data, beside=T, col=c(Depth_col, Norm_col, MM_col, SCDE_col, ZIFA_col), names=c("Blischak", "Klein", "Zeisel", "Usoskin", "Kolo", "Shalek", "Deng", "Buettner", "Pollen", "Biase"), las=3)
-legend("topleft", bty="n", fill = c(Depth_col, Norm_col, MM_col, SCDE_col, ZIFA_col), c("Depth-Adjusted","Basic NB", "M3Drop", "SCDE", "ZIFA"));
+legend("top", bty="n", fill = c(Depth_col, Norm_col, MM_col, SCDE_col, ZIFA_col), c("Depth-Adjusted","Basic NB", "M3Drop", "SCDE", "ZIFA"), horiz=T);
 dev.off()
