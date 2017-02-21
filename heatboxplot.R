@@ -1,9 +1,10 @@
 silhouette_boxplot <- function(x, col="grey50", ylim=c(min(x),max(x)), main="") {
-	par(mar=c(0.0.5,2,0.5))
+	par(mar=c(0,0,1,0))
 	boxplot(x, ylim=ylim, col=col, border=col, staplewex=0, outline=FALSE, xaxt="n", yaxt="n", xlab="", ylab="", frame.plot=FALSE)
 
 }
 colorbar_plot <- function(colour_vec, horiz=FALSE) {
+	par(mar=c(0,0,0,0))
 	if (!horiz) {
 		image(rbind(1:length(colour_vec)), 
 			col = colour_vec, axes = FALSE)
@@ -30,8 +31,8 @@ get_height_for_k <- function(dendro, k) {
                 }
                 # Remove to split
                 dendro_list[to_split] <- NULL
-		height_out = mean(dendro_heights[to_split], 
-				max(dendro_heights[-to_split]));
+		height_out = mean(c(dendro_heights[to_split], 
+				max(dendro_heights[-to_split])));
                 dendro_heights <- dendro_heights[-to_split]
                 curr_k <- curr_k-1+length(children)
         }
@@ -40,7 +41,8 @@ get_height_for_k <- function(dendro, k) {
 
 
 
-cut_dendro_plot <- funcion(dendro, k, horiz=TRUE, full=TRUE) {
+cut_dendro_plot <- function(dendro, k, horiz=TRUE, full=TRUE) {
+	par(mar=c(0,0,0,0))
 	dendro <- as.dendrogram(dendro);
 	if (!full) { dendro <- cut(dendro, k=k) }
 	plot(dendro, axes=FALSE, leaflab="none", horiz=horiz)
@@ -56,11 +58,17 @@ cut_dendro_plot <- funcion(dendro, k, horiz=TRUE, full=TRUE) {
 epic_dendro_boxplots <- function(x, distfun = dist, hclustfun = hclust,
 	k, markers, marker_col, vbar_labels, vbar_cols) {
 	# Layout
+	box_height=1; box_width=0.5;
+	bar_width=0.25; dendro_width=3;
+
 	nrow = k; ncol = length(markers);
         lhei <- c(rep(box_height, times=k))
         lwid <- c(dendro_width, bar_width, rep(box_width, times=ncol))
-        lmat <- matrix(c(rep(1,times=k),rep(2,times=k),3:(ncol*k)), 
-			ncol=ncol, byrow=FALSE)
+        lmat <- matrix(c(rep(1,times=k),rep(2,times=k),3:(ncol*k+2)), 
+			ncol=(ncol+2), byrow=FALSE)
+print(dim(lmat))
+
+	layout(lmat, heights=lhei, widths=lwid)
 
 	# Create Dendrogram
         hcc <- hclustfun(distfun( t(x) ))
@@ -68,7 +76,7 @@ epic_dendro_boxplots <- function(x, distfun = dist, hclustfun = hclust,
 
 	# Create colour bar
         ddc <- as.dendrogram(hcc)
-        ddc <- reorder(ddc, Colv)
+#       ddc <- reorder(ddc, colnames(x))
         colInd <- order.dendrogram(ddc)
 	if (!is.factor(vbar_labels)) {
 		vbar_labels <- factor(vbar_labels);
@@ -77,15 +85,17 @@ epic_dendro_boxplots <- function(x, distfun = dist, hclustfun = hclust,
 	colorbar_plot(my_col)
 
 	# Create marker boxes
-	groups <- cutree(ddc, k=k)
+	groups <- cutree(as.hclust(ddc), k=k)
 	groups <- groups[colInd]
 	x <- x[,colInd]
 	g_order <- unique(groups)
 	for (m in markers) {
 		ylim = c(min(x[rownames(x) == m,]), max(x[rownames(x) == m,]))
+		global = mean(x[rownames(x) == m,]);
 		for (g in g_order) {
 			dat <- x[rownames(x) == m, groups == g]
 			silhouette_boxplot(dat, col=marker_col[markers==m], ylim=ylim)
+			points(1,global, col="black", pch=18, cex=1.5)
 			if (g == g_order[1]) {
 				title(main=m)
 			}
