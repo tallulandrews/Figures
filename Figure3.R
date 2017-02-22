@@ -4,7 +4,7 @@ source("Colour_Scheme.R")
 source("/nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/DE_vs_bulk/Other_FS_functions.R")
 
 ICM_col="dodgerblue2"
-TE_col="darkgreen"
+TE_col="forestgreen"
 
 map = read.table("/lustre/scratch117/cellgen/team218/TA/Mirrored_Annotations/Mmus_Gene_Name_Mapping_Ensembl80.out", header=T)
 ensg2symbol <- function(x) {
@@ -121,8 +121,9 @@ Xue_labels[Xue_labels == "4cellmixed"] = "4cellmix"
 Xue_labels[Xue_labels == "8cellmixed"] = "8cellmix"
 Xue_labels[Xue_labels == "Pronucleus"] = "pronuc"
 Xue_list = normalize_data(Xue_data, labels=Xue_labels, is.counts=FALSE)
-Xue_count = convert_to_integer(Xue_list$data);
 Xue_list$labels = get_ICM_TE_assignments(Xue_list$data, Xue_list$labels)
+Xue_count = convert_to_integer(Xue_list$data);
+Xue_list$data <- Xue_list$data[rownames(Xue_list$data) %in% rownames(Xue_count),]
 
 # Fan
 Fan_data = read.table("/lustre/scratch117/cellgen/team218/TA/scRNASeqDatasets/GSE53386_matrix_fpkms.tsv", header=TRUE)
@@ -135,6 +136,7 @@ Fan_labels[Fan_labels == "8-cell"] = "8cell"
 Fan_list = normalize_data(Fan_data, labels=Fan_labels, is.counts=FALSE)
 Fan_count = convert_to_integer(Fan_list$data)
 Fan_list$labels = get_ICM_TE_assignments(Fan_list$data, Fan_list$labels)
+Fan_list$data <- Fan_list$data[rownames(Fan_list$data) %in% rownames(Fan_count),]
 
 # Goolam
 Goolam_data = read.table("/lustre/scratch117/cellgen/team218/TA/scRNASeqDatasets/Goolam_et_al_2015_count_table.tsv", header=T)
@@ -160,16 +162,16 @@ consistent_genes <- genes[genes %in% rownames(zhong_list$data) &
 		    genes %in% rownames(Goolam_counts$data) &
 		    genes %in% rownames(zhong_count)
 		    ]
-counts_list$data <- counts_list$data[rownames(counts_list$data) %in% consistent_genes,]
-norm_list$data <- norm_list$data[rownames(norm_list$data) %in% consistent_genes,]
-zhong_count <- zhong_count[rownames(zhong_count) %in% consistent_genes,]
-zhong_list$data <- zhong_list$data[rownames(zhong_list$data) %in% consistent_genes,]
-Xue_count <- Xue_count[rownames(Xue_count) %in% consistent_genes,]
-Xue_list$data <- Xue_list$data[rownames(Xue_list$data) %in% consistent_genes,]
-Fan_count <- Fan_count[rownames(Fan_count) %in% consistent_genes,]
-Fan_list$data <- Fan_list$data[rownames(Fan_list$data) %in% consistent_genes,]
-Goolam_counts$data <- Goolam_counts$data[rownames(Goolam_counts$data) %in% consistent_genes,]
-Goolam_list$data <- Goolam_list$data[rownames(Goolam_list$data) %in% consistent_genes,]
+counts_list$data <- counts_list$data[match(consistent_genes, rownames(counts_list$data)),]
+norm_list$data <- norm_list$data[match(consistent_genes, rownames(norm_list$data)),]
+zhong_count <- zhong_count[match(consistent_genes, rownames(zhong_count)),]
+zhong_list$data <- zhong_list$data[match(consistent_genes, rownames(zhong_list$data)),]
+Xue_count <- Xue_count[match(consistent_genes, rownames(Xue_count)),]
+Xue_list$data <- Xue_list$data[match(consistent_genes, rownames(Xue_list$data)),]
+Fan_count <- Fan_count[match(consistent_genes, rownames(Fan_count)),]
+Fan_list$data <- Fan_list$data[match(consistent_genes, rownames(Fan_list$data)),]
+Goolam_counts$data <- Goolam_counts$data[match(consistent_genes, rownames(Goolam_counts$data)),]
+Goolam_list$data <- Goolam_list$data[match(consistent_genes, rownames(Goolam_list$data)),]
 
 
 # Features

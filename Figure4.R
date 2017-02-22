@@ -6,7 +6,7 @@ source("/nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/DE_vs_bulk/Other_
 source("heatboxplot.R")
 
 ICM_col="dodgerblue2"
-TE_col="darkgreen"
+TE_col="forestgreen"
 
 map = read.table("/lustre/scratch117/cellgen/team218/TA/Mirrored_Annotations/Mmus_Gene_Name_Mapping_Ensembl80.out", header=T)
 ensg2symbol <- function(x) {
