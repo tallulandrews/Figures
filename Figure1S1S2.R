@@ -90,7 +90,7 @@ custom_plot <- function(data, file_prefix=NA, known_groups=as.character(1:length
 }
 
 Depth_col = "goldenrod1"
-Norm_col = "violet"
+Norm_col = "mediumpurple1"
 
 NB_plot <- function(counts, size_factor=(colSums(counts)/median(colSums(counts))), suppress.plot=FALSE) {
         norm <- NBumiConvertToInteger(t(t(counts)/size_factor));
@@ -107,10 +107,11 @@ NB_plot <- function(counts, size_factor=(colSums(counts)/median(colSums(counts))
 #               log(fit_adjust$vals$tjs/fit_adjust$vals$nc)/log(10), rowSums(check_basic$exp_ps), col="purple", 
 #               length=0)
 if (!suppress.plot) {
-        plot( fit_adjust$vals$tjs/nc, fit_adjust$vals$djs/nc, col="black", pch=16, xlab="Expression", log="x", ylab= "Dropout Rate", cex=0.75)
+        plot( log(fit_adjust$vals$tjs/nc)/log(10), fit_adjust$vals$djs/nc, col="black", pch=16, xlab="", ylab= "", cex=0.75)
+	title( ylab= "Dropout Rate", xlab="log10(expression)", line=2)
 #        points( fit_adjust$vals$tjs/nc, fit_basic$vals$djs/nc, col="black", pch=16, cex=0.75)
-        points( fit_adjust$vals$tjs/nc, rowSums(check_adjust$exp_ps)/nc, col=Depth_col, pch=16, cex=0.5 )
-        points( fit_adjust$vals$tjs/nc, rowSums(check_basic$exp_ps)/nc, col=Norm_col, pch=16, cex=0.5 )
+        points( log(fit_adjust$vals$tjs/nc)/log(10), rowSums(check_adjust$exp_ps)/nc, col=Depth_col, pch=16, cex=0.5 )
+        points( log(fit_basic$vals$tjs/nc)/log(10), rowSums(check_basic$exp_ps)/nc, col=Norm_col, pch=16, cex=0.5 )
 }
         err_adj <- sum(abs(rowSums(check_adjust$exp_ps)/nc-fit_adjust$vals$djs/nc))
 #        err_bas <- sum(abs(rowSums(check_basic$exp_ps)/nc-fit_basic$vals$djs/nc))
@@ -124,13 +125,13 @@ if (!suppress.plot) {
 
 source("/nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/DE_vs_bulk/Load_Ola_SC.R")
 Ola <- as.matrix(data[-spikes,]);
-Ola_stats_MM <- custom_plot(Ola, is_counts=TRUE, xlim=c(-1.5,6), textpos=-0.5)
+Ola_stats_MM <- custom_plot(Ola, is_counts=TRUE, xlim=c(-1.5,6), textpos=-0.5, suppress.plot=TRUE)
 Ola_stats_NB = NB_plot(NBumiConvertToInteger(Ola), suppress.plot=TRUE)
 
 source("../My_R_packages/M3D/R/NB_UMI.R"); require("matrixStats");
 source("/nfs/users/nfs_t/ta6/NetworkInferencePipeline/Dropouts/DE_vs_bulk/Load_Blishcak_UMI.R")
 Blish <- counts;
-blish_stats_NB = NB_plot(Blish)
+blish_stats_NB = NB_plot(Blish, suppress.plot=TRUE)
 blish_stats_MM <- custom_plot(Blish, is_counts=TRUE, xlim=c(-1.5,6), textpos=-0.5, suppress.plot=TRUE)
 
 
@@ -216,24 +217,26 @@ title(main="Usoskin (5'Seq)", line=0.5); mtext("C",side=2, line=2, cex=2*scaling
 
 par(mar=c(5,4,1,1))
 barplot(cbind(blish_stats_NB, kir_stats_NB, lin_stats_NB, uso_stats_NB), beside=T, col=c(Depth_col,Norm_col), 
-	names=c("Blischak\n5' UMI", "Klein\n3' UMI", "Zeisel\n5' UMI", "Usoskin\n5' Reads"), ylab="Absolute Error", las=3)
+	names=c("Tung\n5' UMI", "Klein\n3' UMI", "Zeisel\n5' UMI", "Usoskin\n5' Reads"), ylab="Absolute Error", las=3)
 mtext("D",side=2, line=2, cex=2*scaling, font=2, at=1500, las=1)
-legend("topleft", fill=c(Depth_col, Norm_col), c("Depth-Adjusted", "Normalized"), bty="n")
+legend("topleft", fill=c(Depth_col, Norm_col), c("Depth-Adjusted", "Simple NB"), bty="n")
 
 dev.off()
 
 ###### Figure 1 ######
 png("Figure1.png", width=6, height=6, units="in", res=300)
 layout(matrix(c(1,2,3,3), ncol=2, byrow=TRUE))
-par(cex=1.25)
-par(mar=c(4,4,3,0))
+par(cex=0.95)
+par(mar=c(4,4,2,0))
 # A
 Ola_stats_MM <- custom_plot(Ola, is_counts=TRUE, xlim=c(-1.5,6), textpos=-0.5)
-title("Zero-inflation models")
-legend("topright", paste(c("M3Drop\nError:", "SCDE\nError:", "ZIFA\nError:"),round(Ola_stats_MM[,2]), c("\n","\n","\n")), lty=c(1,2,3), col=c(MM_col, SCDE_col, ZIFA_col), bty="n", lwd=3, cex=0.5)
+title("Zero-inflation models", cex=0.75, line=1)
+legend("topright", paste(c("M3Drop\nError:", "SCDE\nError:", "ZIFA\nError:"),round(Ola_stats_MM[,2]), c("\n","\n","\n")), lty=c(1,2,3), col=c(MM_col, SCDE_col, ZIFA_col), bty="n", lwd=3, cex=0.6)
 # B
-blish_stats_NB <- NBumiCompareModels(Blish)
-title("Negative Binomial Models")
+par(mar=c(4,3,2,1))
+blish_stats_NB <- NB_plot(Blish)
+title("Negative Binomial Models", cex=0.75, line=1)
+legend("topright", paste(c("DANB\nError:", "Basic NB\nError:"), round(c(blish_stats_NB[1],blish_stats_NB[2])), c("\n","\n")), pch=16, col=c(Depth_col, Norm_col), bty="n", cex=0.6)
 # C
 bar_data <- cbind( c(blish_stats_NB, blish_stats_MM[,2]), 
 		   c(kir_stats_NB, kir_stats_MM[,2]),
@@ -247,6 +250,6 @@ bar_data <- cbind( c(blish_stats_NB, blish_stats_MM[,2]),
 		   c(Z_stats_NB, Z_stats_MM[,2]))
 
 par(mar=c(4.5,4,0,0))
-barplot(bar_data, beside=T, col=c(Depth_col, Norm_col, MM_col, SCDE_col, ZIFA_col), names=c("Blischak", "Klein", "Zeisel", "Usoskin", "Kolo", "Shalek", "Deng", "Buettner", "Pollen", "Biase"), las=3)
-legend("top", bty="n", fill = c(Depth_col, Norm_col, MM_col, SCDE_col, ZIFA_col), c("Depth-Adjusted","Basic NB", "M3Drop", "SCDE", "ZIFA"), horiz=T);
+barplot(bar_data, beside=T, col=c(Depth_col, Norm_col, MM_col, SCDE_col, ZIFA_col), names=c("Tung", "Klein", "Zeisel", "Usoskin", "Kolo", "Shalek", "Deng", "Buettner", "Pollen", "Biase"), las=3, log="y", ylab="Error")
+legend("top", bty="n", fill = c(Depth_col, Norm_col, MM_col, SCDE_col, ZIFA_col), c("DAND","Basic NB", "M3Drop", "SCDE", "ZIFA"), ncol=3, cex=0.8);
 dev.off()

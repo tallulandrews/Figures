@@ -150,23 +150,6 @@ Source = factor(dataset_labels);
 pch_set = c(17,1,18,15,16)
 col_set = brewer.pal("Set2", n=length(unique(Stage)))
 
-make_PCA <- function(gene_list) {
-	toplot <- log(Combined_norm[rownames(Combined_norm) %in% gene_list,]+1)/log(2);
-	PCA = prcomp(toplot);
-	plot(PCA$rotation[,1], PCA$rotation[,2], col=col_set[Stage], pch=pch_set[Source], xlab=paste("PC1 (",round(PCA$sdev[1]/sum(PCA$sdev)*100, digits=2)," %)",sep=""), ylab=paste("PC2 (",round(PCA$sdev[2]/sum(PCA$sdev)*100, digits=2)," %)",sep=""))
-	dists <- dist(t(toplot), method="euclidean")
-	htree <- hclust(dists, method="ward.D2")
-	require("igraph")
-        sim = vector(length = length(toplot[1,]))
-        for(k in 1:length(toplot[1,])) {
-                clusters = cutree(htree, k)
-                sim[k] = compare(clusters, as.factor(truth), method="adjusted.rand")
-        }
-	return(sim);
-}
-
-
-
 # Features
 Deng <- getFeatures(counts_list$data, norm_list$data, name="Deng")
 Biase <- getFeatures(zhong_count, zhong_list$data, name="Biase");
@@ -203,55 +186,32 @@ ncor = seq(from=6, to=n_meth*n_set, by=n_meth)
 pc23 = seq(from=7, to=n_meth*n_set, by=n_meth)
 pc123 = seq(from=8, to=n_meth*n_set, by=n_meth)
 
-get_prob <- function(probs, k=length(probs)) {
-        yes <- combn(1:length(probs), k)
-        p <- sum(apply(yes, 2, function(y) {prod(probs[y],1-probs[-y])}))
-}
-
-get_chi_sq <- function(my_mat) {
-        obs = sapply(1:length(my_mat[1,]), function(i) {sum(rowSums(my_mat) == i)})
-        probs = colSums(my_mat)/length(my_mat[,1])
-        exp <- sapply(1:length(my_mat[1,]), function(i) {length(my_mat[,1])*get_prob(probs,i)})
-        return(list(chisq=sum((obs-exp)^2/exp), obs=obs, exp=exp))
-}
-
-m3d_stats = get_chi_sq(my_Matrix[,m3d])
-hvg_stats = get_chi_sq(my_Matrix[,hvg])
-nb_stats  = get_chi_sq(my_Matrix[,nb])
-nbv_stats = get_chi_sq(my_Matrix[,nbv])
-gini_stats = get_chi_sq(my_Matrix[,gini])
-ncor_stats = get_chi_sq(my_Matrix[,ncor])
-pc23_stats = get_chi_sq(my_Matrix[,pc23])
-pc123_stats = get_chi_sq(my_Matrix[,pc123])
-
-png("Figure_Reproducibility.png", width=8, height=5, units="in", res=300)
-par(mar=c(4,4,1,1))
-xes <- barplot(rbind(m3d_stats$obs-m3d_stats$exp, hvg_stats$obs-hvg_stats$exp,
-                        nb_stats$obs-nb_stats$exp, nbv_stats$obs-nbv_stats$exp,
-                        gini_stats$obs-gini_stats$exp, ncor_stats$obs-ncor_stats$exp,
-                        pc23_stats$obs-pc23_stats$exp, pc123_stats$obs-pc123_stats$exp),
-                        beside=TRUE, ylab="Number of Genes (Obs-Exp)", names=c("1","2","3","4","5"),
-                        col=c(MM_col, hvg_1_col, Depth_col, NBVar_col, gini_col, cor_col, pca_1_col, pca_2_col), xlab="Number of Datasets", ylim=c(-2500, 501))
-
-legend("bottomright", paste(c("M3Drop","HVG","NBDrop","NBDisp", "Gini","Cor","PCA(2-3)","PCA(1-3)"),
-        "\nChi2:",round(c(m3d_stats$chisq, hvg_stats$chisq, nb_stats$chisq, nbv_stats$chisq,
-                          gini_stats$chisq, ncor_stats$chisq, pc23_stats$chisq, pc123_stats$chisq)), "\n"),
-        fill=c(MM_col, hvg_1_col, Depth_col, NBVar_col, gini_col, cor_col, pca_1_col, pca_2_col),bty="n", ncol=2)
-dev.off()
-
-# Clustering Quality
+# PCAs
 quality <- matrix(nrow=n_meth, ncol=2)
 col_sets <- list(m3d, hvg, nb, nbv, gini, ncor, pc23, pc123)
-names <- c("M3Drop", "HVG", "NBDrop", "NBDisp", "Gini", "NCor", "PC23", "PC123")
-for (i in 1:n_meth) {
-	png(paste(names[i],"_Combine_PCA_new.png", sep=""), width=5, height=5, units="in", res=300)
-	par(mar=c(4,4,1,1));
-	thing = make_PCA(rownames(my_Matrix[rowSums(my_Matrix[,col_sets[[i]]]) > 2,]));
-	dev.off()
-	quality[i,] = c(max(thing), which(thing == max(thing)));
+names <- c("M3Drop", "HVG", "NBDrop", "NBDisp", "Gini", "Cor", "PCA(2-3)", "PCA(1-3)")
+
+make_PCA <- function(gene_list) {
+	par(mar=c(3,3,2,1));
+	toplot <- log(Combined_norm[rownames(Combined_norm) %in% gene_list,]+1)/log(2);
+	PCA = prcomp(toplot);
+	plot(PCA$rotation[,1], PCA$rotation[,2], col=col_set[Stage], pch=pch_set[Source])
+	title(xlab=paste("PC1 (",round(PCA$sdev[1]/sum(PCA$sdev)*100, digits=2)," %)",sep=""), line=2)
+	title(ylab=paste("PC2 (",round(PCA$sdev[2]/sum(PCA$sdev)*100, digits=2)," %)",sep=""), line=2)
 }
-rownames(quality) <- names
-colnames(quality) <- c("ARI", "k")
+png("FigureS6.png", width=8, height=8, units="in", res=300)
+par(mfrow=c(3,3))
+for (i in 1:n_meth) {
+	thing = make_PCA(rownames(my_Matrix[rowSums(my_Matrix[,col_sets[[i]]]) > 2,]));
+	title(main=names[i], line=1)
+}
 
-plot(quality[,2], quality[,1], col=c(MM_col, hvg_1_col, Depth_col, NBVar_col, gini_col, cor_col, pca_1_col, pca_2_col), pch=16, cex=3)
+plot(1,1, xaxt="n", yaxt="n", main="", xlab="",ylab="", pch=4, bty="n", col="white")
+#legend("left", c("Stage",levels(Stage),"Dataset",levels(Source)),
+#col=c("white",col_set, "white", rep("black", times=length(pch_set))), 
+#pch=c(NA, rep(16, times=length(col_set)), NA, pch_set), bty="n", ncol=2)
 
+par(cex=1.1)
+legend("topleft", levels(Stage),col=col_set, pch=16, bty="n", title="Stage")
+legend("topright", levels(Source),col="black", pch=pch_set, bty="n", title="Dataset")
+dev.off()

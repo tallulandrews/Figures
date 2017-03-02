@@ -153,10 +153,10 @@ mark_col = c(rep(ICM_col, times=length(ICM_markers)),
 		rep(TE_col, times=length(TE_markers)))
 clust_fun <- function(x) {hclust(x, method="ward.D2")}
 
-png("Figure4All.png", width=6, height=5, units="in", res=300)
-epic_dendro_boxplots(all_data, distfun=dist, hclustfun=clust_fun, 4, markers, mark_col, labs, lab_cols)
+png("Figure4All.png", width=6, height=4, units="in", res=300)
+epic_dendro_boxplots(all_data, distfun=dist, hclustfun=clust_fun, 3, markers, mark_col, labs, lab_cols)
 dev.off()
 
-png("Figure4M3D.png", width=6, height=5, units="in", res=300)
-epic_dendro_boxplots(m3d_data, distfun=dist, hclustfun=clust_fun, 4, markers, mark_col, labs, lab_cols)
+png("Figure4M3D.png", width=6, height=4, units="in", res=300)
+epic_dendro_boxplots(m3d_data, distfun=dist, hclustfun=clust_fun, 2, markers, mark_col, labs, lab_cols)
 dev.off()
