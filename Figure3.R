@@ -325,12 +325,16 @@ make_PCA <- function(gene_list) {
 
 # PCA plots (B & C)
 
+par(mar=c(4,4,1.5,1))
 out1 = make_PCA(rownames(my_Matrix[rowSums(my_Matrix[,m3d]) > 2, ]))
+title(main="M3Drop", line=0.5)
 out2 = make_PCA(rownames(my_Matrix))
-
+title(main="All", line=0.5)
+# Legends for M3Drop plot
+#legend(-0.02,0, levels(Stage), col=col_set, pch=16, title="Stage", bty="n")
+#legend(-0.0,0, levels(Source), col="black", pch=pch_set, title="Dataset", bty="n")
 
 ##### Anxa2 S100a10
-
 
 # Anxa2 S100a10 correlations
 heat_data <- log(Combined_norm+1)/log(2);
@@ -347,31 +351,38 @@ c16 = truth_blast=="16cell"
 bla = truth_blast=="blast"
 
 print("4cell")
-par(mar=c(4,4,2.5,0))
-plot(Anxa2[c4], S100a10[c4], pch=pch_set[Source[c4]], xlab="Anxa2", ylab="S100a10", col="grey50", main="4 cell", cex=1.5)
+par(mar=c(3,4,2,0))
+plot(Anxa2[c4], S100a10[c4], pch=pch_set[Source[c4]], xlab="", ylab="S100a10", col="grey50", main="", cex=1)
+title(main="4 cell", line=1, cex=1)
+title(xlab="Anxa2", line=2)
 cout = cor.test(Anxa2[c4], S100a10[c4])
-legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
+#legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
+legend("topright", paste("r = ",c(round(cout$estimate, digits=2)), sep=""), bty="n", cex=0.9)
 
 print("8-16cell")
-par(mar=c(4,4,2.5,1))
-plot(Anxa2[c8 | c16], S100a10[c8 | c16], pch=pch_set[Source[c8 | c16]], xlab="Anxa2", ylab="", col="grey50", main="8-16 cell", cex=1.5)
-title(ylab="S100a10", line=2)
+par(mar=c(3,4,2,1))
+plot(Anxa2[c8 | c16], S100a10[c8 | c16], pch=pch_set[Source[c8 | c16]], xlab="", ylab="", col="grey50", main="", cex=1)
+title(ylab="S100a10", xlab="Anxa2", line=2)
+title(main="8-16 cell", line=1, cex=1)
 cout = cor.test(Anxa2[c8 | c16], S100a10[c8 | c16])
-legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
+#legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
+legend("topleft", paste("r = ",c(round(cout$estimate, digits=2)), sep=""), bty="n", cex=0.9)
 
 print("blast")
-par(mar=c(4,4,2.5,1))
+par(mar=c(3,3,2,1))
 blast_cols = rep("grey50",times=length(truth_ICM_TE)); 
 blast_cols[truth_ICM_TE=="TE"] = TE_col; 
 blast_cols[truth_ICM_TE=="ICM"]= ICM_col;
-plot(Anxa2[bla], S100a10[bla], pch=pch_set[Source[bla]], xlab="Anxa2", ylab="", col=blast_cols[bla], main="blastocyst", cex=1.5)
-title(ylab="S100a10", line=2)
+plot(Anxa2[bla], S100a10[bla], pch=pch_set[Source[bla]], xlab="Anxa2", ylab="", col=blast_cols[bla], main="", cex=1)
+title(ylab="S100a10", xlab="Anxa2", line=2)
+title(main="blastocyst", line=1)
 
 tidy1 = Anxa2[truth_ICM_TE=="TE" & Anxa2>4 & S100a10>4]
 tidy2 = S100a10[truth_ICM_TE=="TE" & Anxa2>4 & S100a10>4]
 reg=lm(tidy2~0+tidy1)
 abline(reg)
 cout = cor.test(Anxa2[bla], S100a10[bla])
-legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
+#legend("top", paste(c("r = ", "p = "),c(round(cout$estimate, digits=2),signif(cout$p.value, digits=2)), sep=""), bty="n")
+legend("top", paste(c("r = "),c(round(cout$estimate, digits=2)), sep=""), bty="n")
 dev.off()
 

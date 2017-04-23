@@ -30,6 +30,7 @@ get_ICM_TE_assignments<- function(x, labels) {
 		new_lab[blasts & ICMscore > TEscore] = "ICM"
 		new_lab[blasts & ICMscore < TEscore] = "TE"
 	}
+	names(new_lab) <- colnames(x)
 	return(new_lab);
 }
 
@@ -136,6 +137,8 @@ pc23 = seq(from=7, to=n_meth*n_set, by=n_meth)
 pc123 = seq(from=8, to=n_meth*n_set, by=n_meth)
 
 # Figure Setup
+#source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+source("/nfs/users/nfs_t/ta6/R-Scripts/A2Rplot_colouredDendro.R")
 
 TE_markers=c("Elf5","Eomes","Cdx2")
 ICM_markers = c("Sox2","Pou5f1","Nanog")
@@ -147,6 +150,8 @@ m3d_genes = unique(c(rownames(my_Matrix)[my_Matrix[,2]==1], ICM_markers, TE_mark
 m3d_data <- all_data[rownames(all_data) %in% m3d_genes,]
 labs=factor(Deng_embyro_list$labels[blasts], levels=c("earlyblast","midblast","lateblast"))
 lab_cols=c("#b3cde3","#8c96c6","#88419d")
+type_labs = factor(norm_list$labels[blasts], levels=c("ICM","TE"))
+type_cols = c(ICM_col, TE_col);
 
 markers = c(ICM_markers, TE_markers)
 mark_col = c(rep(ICM_col, times=length(ICM_markers)), 
@@ -154,9 +159,9 @@ mark_col = c(rep(ICM_col, times=length(ICM_markers)),
 clust_fun <- function(x) {hclust(x, method="ward.D2")}
 
 png("Figure4All.png", width=6, height=4, units="in", res=300)
-epic_dendro_boxplots(all_data, distfun=dist, hclustfun=clust_fun, 3, markers, mark_col, labs, lab_cols)
+epic_dendro_boxplots(all_data, distfun=dist, hclustfun=clust_fun, 4, markers, mark_col, type_labs, type_cols)
 dev.off()
 
 png("Figure4M3D.png", width=6, height=4, units="in", res=300)
-epic_dendro_boxplots(m3d_data, distfun=dist, hclustfun=clust_fun, 2, markers, mark_col, labs, lab_cols)
+epic_dendro_boxplots(m3d_data, distfun=dist, hclustfun=clust_fun, 2, markers, mark_col, type_labs, type_cols)
 dev.off()
